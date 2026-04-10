@@ -24,17 +24,44 @@
             border-radius: 16px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
             text-align: center; 
-            max-width: 450px;
+            max-width: 480px;
             width: 100%;
         }
         .logo { width: 80px; margin-bottom: 15px; border-radius: 10%; }
         h1 { color: #1a1a1a; margin: 10px 0; font-size: 1.5rem; }
         p { color: #555; line-height: 1.6; font-size: 0.95rem; }
+        a { color: #007bff; text-decoration: none; font-weight: 500; }
         
         /* Căn chỉnh nút nạp */
-        .flasher-container { margin: 25px 0; }
+        .flasher-container { margin: 25px 0; padding: 15px; background: #fffdf0; border: 1px solid #ffeeba; border-radius: 8px; }
+
+        /* CSS cho phần ẩn hiện Hướng dẫn */
+        .android-section { margin-top: 20px; text-align: left; }
+        .toggle-btn {
+            background: #e9ecef;
+            color: #495057;
+            border: none;
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        .toggle-btn:hover { background: #dee2e6; }
         
-        /* Miễn trừ trách nhiệm */
+        .instructions-content {
+            display: none; /* Mặc định ẩn */
+            padding: 15px 5px;
+        }
+        .step { margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-left: 4px solid #007bff; border-radius: 4px; }
+        .step-title { font-weight: bold; display: block; margin-bottom: 5px; color: #333; }
+        .link-list { margin-top: 5px; padding-left: 0; list-style: none; margin-bottom: 0; }
+        .link-list li { margin-bottom: 8px; font-size: 0.9rem; }
+
         .disclaimer {
             margin-top: 25px;
             padding-top: 20px;
@@ -45,7 +72,6 @@
         }
         .disclaimer strong { color: #d9534f; }
 
-        /* Buy me a coffee */
         .coffee-btn { margin-top: 20px; transition: transform 0.2s; }
         .coffee-btn:hover { transform: scale(1.05); }
         .coffee-btn img { height: 40px !important; border-radius: 8px; }
@@ -57,10 +83,31 @@
         <img src="logonew.png" alt="NBike Logo" class="logo">
         
         <h1>NBike HMI Flasher</h1>
-        <p>Chào mừng bạn! Công cụ này giúp bạn cập nhật Firmware cho thiết bị NBike HMI (ESP32-S3) qua trình duyệt.</p>
+        <p>Công cụ cập nhật Firmware cho <a href="https://www.lcdwiki.com/2.8inch_ESP32-S3_Display#Product_Picture" target="_blank">HMI (ESP32-S3)</a></p>
 
         <div class="flasher-container">
             <esp-web-install-button manifest="firmware/manifest.json"></esp-web-install-button>
+        </div>
+
+        <div class="android-section">
+            <button class="toggle-btn" onclick="toggleInstructions()">
+                📱 Hướng dẫn cài đặt app nBike Android <span id="arrow">▼</span>
+            </button>
+            <div id="instructionsContent" class="instructions-content">
+                <div class="step">
+                    <span class="step-title">Bước 1: Tham gia Group</span>
+                    <p style="margin:0; font-size: 0.9rem;">Join nhóm: <a href="https://groups.google.com/g/aedatbike" target="_blank">Google Group AeDatbike</a></p>
+                    <small style="color: #888;">(Xong qua B2 ngay không cần đợi accept)</small>
+                </div>
+
+                <div class="step">
+                    <span class="step-title">Bước 2: Tải App</span>
+                    <ul class="link-list">
+                        <li>🔗 <strong>Web:</strong> <a href="https://play.google.com/apps/testing/com.ntech.nbike" target="_blank">Link chấp nhận thử nghiệm</a></li>
+                        <li>🔗 <strong>Android:</strong> <a href="https://play.google.com/store/apps/details?id=com.ntech.nbike" target="_blank">Link tải Google Play</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <div class="coffee-btn">
@@ -71,14 +118,24 @@
 
         <div class="disclaimer">
             <strong>⚠️ MIỄN TRỪ TRÁCH NHIỆM:</strong>
-            <p>
-                Dự án này là mã nguồn mở. Việc nạp firmware có thể dẫn đến rủi ro hư hỏng thiết bị nếu thực hiện sai cách hoặc phần cứng không tương thích. 
-                Bằng việc nhấn "Install", bạn đồng ý tự chịu mọi rủi ro. Tác giả không chịu trách nhiệm cho bất kỳ tổn thất nào phát sinh.
-            </p>
+            <p>Việc nạp firmware có rủi ro hư hỏng nếu thực hiện sai. Bằng việc nhấn "Install", bạn tự chịu mọi trách nhiệm.</p>
         </div>
     </div>
 
     <p style="font-size: 0.8rem; color: #aaa; margin-top: 20px;">Powered by ESP Web Tools & Soulmaster179</p>
 
+    <script>
+        function toggleInstructions() {
+            const content = document.getElementById('instructionsContent');
+            const arrow = document.getElementById('arrow');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                arrow.innerHTML = '▼';
+            } else {
+                content.style.display = 'block';
+                arrow.innerHTML = '▲';
+            }
+        }
+    </script>
 </body>
 </html>
